@@ -6,7 +6,7 @@
 	<display-name>weixin-front</display-name>
 	<!--Spring 容器启动监听器 -->
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<listener-class>com.ry.pfb.core.WxMpServerListener</listener-class>
 	</listener>
 
 	<context-param>

@@ -1,0 +1,15 @@
+<xml>
+	<menu>
+		<buttons>
+			<button1>
+				<name>保险管理</name>
+				<type></type>
+				<key></key>
+				<url></url>
+				<subButtons>
+				
+				</subButtons>
+			</button1>
+			<>
+		</buttons>
+</xml>
