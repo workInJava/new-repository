@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ry.pfb.core.WxMpServerUtil;
+import com.ry.pfb.core.WxMpServerListener;
+
 
 import me.chanjar.weixin.common.util.StringUtils;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
@@ -23,20 +23,20 @@ import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 @Controller
 public class Test {
 
-	private final WxMpConfigStorage wxMpConfigStorage = WxMpServerUtil.wxMpConfigStorage;
-	private final WxMpService wxMpService = WxMpServerUtil.wxMpService;
-	private final WxMpMessageRouter wxMpMessageRouter = WxMpServerUtil.wxMpMessageRouter;
+
+	private final WxMpConfigStorage wxMpConfigStorage = WxMpServerListener.wxMpConfigStorage;
+	private final WxMpService wxMpService = WxMpServerListener.wxMpService;
+	private final WxMpMessageRouter wxMpMessageRouter = WxMpServerListener.wxMpMessageRouter;
 
 	@RequestMapping("/test")
-	@ResponseBody
-	public ModelAndView method(HttpServletRequest re, HttpServletResponse res) throws UnsupportedEncodingException {
+	public ModelAndView test(HttpServletRequest re, HttpServletResponse res) throws UnsupportedEncodingException {
 		ModelAndView mv = new ModelAndView("test");
-		mv.addObject("name", "测试");
+		mv.addObject("name", "呼呼哈");
 		return mv;
 	}
 
-	@RequestMapping("/testweixin")
-	public void test(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	@RequestMapping("/weixin")
+	public void method(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html;charset=utf-8");
 		response.setStatus(HttpServletResponse.SC_OK);
 
@@ -82,5 +82,21 @@ public class Test {
 
 		response.getWriter().println("不可识别的加密类型");
 		return;
+
 	}
+	
+	@RequestMapping("/test1")
+	public ModelAndView test1(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		String signature = request.getParameter("signature");
+		String nonce = request.getParameter("nonce");
+		String timestamp = request.getParameter("timestamp");
+		ModelAndView mv = new ModelAndView("test1");
+		if (!wxMpService.checkSignature(timestamp, nonce, signature)) {
+			// 消息签名不正确，说明不是公众平台发过来的消息
+			//response.getWriter().println("非法请求");
+			return mv.addObject("jsp", "非法请求");
+		}
+		return mv;
+	}
+
 }

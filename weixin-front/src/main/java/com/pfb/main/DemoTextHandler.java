@@ -1,28 +1,31 @@
-package com.ry.pfb.core;
+package com.pfb.main;
 
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpMessageHandler;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutTextMessage;
 
 import java.util.Map;
 
 /**
  * @author junli
->>>>>>> ref/for/master
  */
-public class DemoOAuth2Handler implements WxMpMessageHandler {
+public class DemoTextHandler implements WxMpMessageHandler {
+
+  private String content;
+  
+  public DemoTextHandler(String content) {
+	this.content = content;
+  }
   @Override
   public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context,
       WxMpService wxMpService, WxSessionManager sessionManager) {
-
-    String href = "<a href=\"" + wxMpService.oauth2buildAuthorizationUrl("snsapi_base", null)
-        + "\">测试oauth2</a>";
-    return WxMpXmlOutMessage
-        .TEXT()
-        .content(href)
-        .fromUser(wxMessage.getToUserName())
+    WxMpXmlOutTextMessage m
+        = WxMpXmlOutMessage.TEXT().content(content).fromUser(wxMessage.getToUserName())
         .toUser(wxMessage.getFromUserName()).build();
+    return m;
   }
+
 }

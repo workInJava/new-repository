@@ -1,6 +1,7 @@
 <xml>
-    <appId>wxf3f0e61064908e18</appId>
-    <secret>d4624c36b6795d1d99dcf0547af5443d</secret>
-    <token>f4571270ea9d4cd5f0bc13d0ba5bbf51</token>
+    <appId>wxcb461e8bf3b09d76</appId>
+    <secret>7ce83128e7c543706221e4c8d5c23abb</secret>
+    <token>bbdf3a644c75dac35eed548321ede279</token>
+    <oauth2redirectUri>http://junlihappy.6655.la/weixin-front/test</oauth2redirectUri>
 </xml>
 

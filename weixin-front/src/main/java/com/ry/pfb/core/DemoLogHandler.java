@@ -9,7 +9,7 @@ import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 import java.util.Map;
 
 /**
- * Created by qianjia on 15/1/22.
+ * @author junli
  */
 public class DemoLogHandler implements WxMpMessageHandler {
   @Override
