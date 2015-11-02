@@ -4,6 +4,7 @@ import me.chanjar.weixin.common.bean.WxMenu;
 import me.chanjar.weixin.common.bean.WxMenu.WxMenuButton;
 
 public class WxMpMenu {
+	
 	public static WxMenu menuCreate() {
 		// 设置菜单
 	    WxMenu menu = new WxMenu();

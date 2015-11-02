@@ -6,11 +6,8 @@ import javax.servlet.ServletContextEvent;
 
 import org.springframework.web.context.ContextLoaderListener;
 
-import com.pfb.main.DemoTextHandler;
-
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.WxMenu;
-import me.chanjar.weixin.common.bean.WxMenu.WxMenuButton;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpMessageHandler;
