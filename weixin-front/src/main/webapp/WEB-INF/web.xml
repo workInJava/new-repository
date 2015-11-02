@@ -6,11 +6,7 @@
 	<display-name>weixin-front</display-name>
 	<!--Spring 容器启动监听器 -->
 	<listener>
-<<<<<<< HEAD
-		<listener-class>com.ry.pfb.core.WxMpServerUtil</listener-class>
-=======
 		<listener-class>com.ry.pfb.core.WxMpServerListener</listener-class>
->>>>>>> ref/for/master
 	</listener>
 
 	<context-param>
