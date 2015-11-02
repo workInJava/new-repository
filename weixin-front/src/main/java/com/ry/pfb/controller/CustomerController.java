@@ -16,24 +16,28 @@ public class CustomerController {
 	private final static Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
 
 	@RequestMapping("/login")
-	public void login(HttpServletRequest re, HttpServletResponse res){
-		String name = (String)re.getAttribute("Name");
-		String pwd = (String)re.getAttribute("Password");
+	public ModelAndView login(HttpServletRequest re, HttpServletResponse res){
+		String name = re.getParameter("Name");
+		String pwd = re.getParameter("Password");
 		if("a".equals(name) && "a".equals(pwd)){
-			re.setAttribute("flag", "success");
+			ModelAndView mv = new ModelAndView("redirect:success");
+			return mv;
 		}else{
-			re.setAttribute("flag", "fail");
-		}
-		try {
-			re.getRequestDispatcher("success.jsp").forward(re,res);
-		} catch (Exception e) {
-			LOGGER.warn("登录出错");
+			ModelAndView mv = new ModelAndView("redirect:gologin");
+			mv.addObject("flag", "fail");
+			return mv;
 		}
 	}
 	
 	@RequestMapping("/gologin")
 	public ModelAndView goLogin(HttpServletRequest re, HttpServletResponse res){
 		ModelAndView mv = new ModelAndView("customer/login");
+		return mv;
+	}
+	
+	@RequestMapping("/success")
+	public ModelAndView success(HttpServletRequest re, HttpServletResponse res){
+		ModelAndView mv = new ModelAndView("customer/success");
 		return mv;
 	}
 }
