@@ -17,11 +17,11 @@
 	<form  action="login"  method="POST">
 		
 		登录名：<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
-		<input name="Name" id="text-basic" value="" type="text"></div><br>
+		<input name="Name" id="textinput-hide" placeholder="手机号/身份证号/护照号" value="" type="text"></div><br>
 		密码：<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
-		<input name="Password" id="text-basic" value="" type="text"></div><br>
+		<input name="Password" id="password" value="" autocomplete="off" type="password"></div><br>
 		<button class="ui-btn ui-shadow ui-corner-all"  style="background:green">登陆</button>
-		<button class="ui-btn ui-shadow ui-corner-all">免费注册</button>
+		<button class="ui-btn ui-shadow ui-corner-all"><a href="../customer/register">免费注册</a></button>
 	</form>
 	
 	<div>为了能更好的向您提供理赔服务，请先注册赔付宝账户，我们承诺将不会向第三方泄露您的个人信息．</div><br><br>

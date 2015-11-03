@@ -60,7 +60,7 @@ public class WxMpServerListener extends ContextLoaderListener {
 	      wxMpMessageRouter
 	          .rule().handler(logHandler).next()
 	          .rule().async(false).msgType(WxConsts.XML_MSG_EVENT).event(WxConsts.EVT_SUBSCRIBE).eventKey("").handler(subScribeHander).end()
-	          .rule().async(false).msgType(WxConsts.XML_MSG_EVENT).event(WxConsts.EVT_CLICK).eventKey("ABOUTAS").handler(oauth2handler).end()
+	          //.rule().async(false).msgType(WxConsts.XML_MSG_EVENT).event(WxConsts.EVT_CLICK).eventKey("ABOUTAS").handler(oauth2handler).end()
 	          .rule().async(false).content("哈哈").handler(textHandler).end()
 	          .rule().async(false).content("图片").handler(imageHandler).end()
 	          .rule().async(false).content("oauth").handler(oauth2handler).end();
