@@ -8,7 +8,7 @@
 <script src="../javascripts/jquery.min.js"></script>
 <script src="../javascripts/jquery.mobile-1.4.5.js"></script>
 </head>
-<body class="ui-mobile-viewport ">
+<body>
 	<div class="ui-content" role="main">
 
 		<%
@@ -28,7 +28,7 @@
 				<label for="password">密码:</label> 
 				<input name="password" id="password" value="" autocomplete="off" type="password">
 			</div>
-			<input value="登陆" type="button" > 
+			<input value="登陆" type="button">
 			<input value="免费注册" type="button">
 		</form>
 	</div>
