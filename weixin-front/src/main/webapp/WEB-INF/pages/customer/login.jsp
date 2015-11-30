@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"%>
+<%@ page session="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <title>账户设置</title>
@@ -11,24 +13,19 @@
 <body>
 	<div class="ui-content" role="main">
 
-		<%
-					String flag = (String) request.getAttribute("flag");
-					if ("fail".equals(flag)) {
-				%>
-		<b><front style="color: red;">用户名或密码错误，重新输入．</front></b>
-		<%
-					}
-				%>
-		<form action="customer/login" method="POST">
+		<c:if test="${!flag}">
+		<b><font style="color: red;">${msg}</font></b>
+		</c:if>
+		<form action="login" method="POST">
 			<div>
 				<label for="text-basic">登录名:</label> 
-				<input name="useName" id="text-basic" value="" type="text">
+				<input name="useName" id="text-basic" value="${useName}" type="text">
 			</div>
 			<div>
 				<label for="password">密码:</label> 
-				<input name="password" id="password" value="" autocomplete="off" type="password">
+				<input name="password" id="password" value="${password}" autocomplete="off" type="password">
 			</div>
-			<input value="登陆" type="button">
+			<input value="登陆" type="submit">
 			<input value="免费注册" type="button">
 		</form>
 	</div>
