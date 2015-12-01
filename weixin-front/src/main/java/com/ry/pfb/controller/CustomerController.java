@@ -29,18 +29,21 @@ public class CustomerController {
 	public String login(HttpServletRequest re, HttpServletResponse res,Model model){
 		String name = (String)re.getParameter("useName");
 		String pwd = (String)re.getParameter("password");
-		if(StringUtils.isBlank(name)&&StringUtils.isBlank(pwd)){
+		HttpSession session = re.getSession(false);
+		if(session == null && StringUtils.isBlank(name)&&StringUtils.isBlank(pwd)){
 			model.addAttribute("msg", "用户名密码不能为空");
 			return "customer/login";
+		}else if(session != null){
+			return "customer/success";
 		}
 		String jsonStr = (String)AxisUtils.axisClient(Arrays.asList(name,pwd),"checkLogin");
 		Result result  = new Gson().fromJson(jsonStr, Result.class);
-		if(result!=null){
+		if(result != null){
 			model.addAttribute("useName", name);
 			if(result.isResult()){
 				LOGGER.info("登陆成功");
-				HttpSession session = re.getSession(true);
-				session.setAttribute("loginedUser", name);
+				session = re.getSession(true);
+				session.setAttribute("userInfo", name);
 				return "customer/success";
 			}else {
 				model.addAttribute("password",pwd);
@@ -59,8 +62,11 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("/loginout")
-	public String loginOut(){
-		
+	public String loginOut(HttpServletRequest re, HttpServletResponse res){
+		HttpSession session = re.getSession(false);
+		if(session!=null){
+			session.invalidate();
+		}
 		return "customer/login";
 	}
 	
