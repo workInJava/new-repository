@@ -1,6 +1,9 @@
 package com.ry.pfb.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.ry.pfb.common.Result;
+import com.ry.pfb.fiter.SessionFilter;
 import com.ry.pfb.util.AxisUtils;
+import com.ry.pfb.util.PropertiesUtils;
 
 import me.chanjar.weixin.common.util.StringUtils;
 
@@ -24,6 +29,7 @@ import me.chanjar.weixin.common.util.StringUtils;
 public class CustomerController {
 	
 	private final static Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
+	private static String SESSIONKEY = "sessionKey";
 
 	@RequestMapping("/login")
 	public String login(HttpServletRequest re, HttpServletResponse res,Model model){
@@ -34,6 +40,8 @@ public class CustomerController {
 			model.addAttribute("msg", "用户名密码不能为空");
 			return "customer/login";
 		}else if(session != null){
+			name = (String)session.getAttribute(PropertiesUtils.getValue(SESSIONKEY));
+			model.addAttribute("useName", name);
 			return "customer/success";
 		}
 		String jsonStr = (String)AxisUtils.axisClient(Arrays.asList(name,pwd),"checkLogin");
@@ -43,7 +51,7 @@ public class CustomerController {
 			if(result.isResult()){
 				LOGGER.info("登陆成功");
 				session = re.getSession(true);
-				session.setAttribute("userInfo", name);
+				session.setAttribute(PropertiesUtils.getValue(SESSIONKEY), name);
 				return "customer/success";
 			}else {
 				model.addAttribute("password",pwd);

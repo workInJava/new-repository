@@ -1,9 +1,10 @@
 package com.ry.pfb.fiter;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.FilterChain;
@@ -17,13 +18,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.ry.pfb.util.PropertiesUtils;
+
 /**
  * 
  */
 public class SessionFilter extends OncePerRequestFilter {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(SessionFilter.class);
-	public static final String PARAM_NAME_EXCLUSIONS = "exclusions";
+	public static final String EXCLUSIONS = "exclusions";
+	public static final String SESSIONKEY = "sessionKey";
 	private Set<String> excludesPattern;
 	private String contextPath;
 	private String sessionKey;
@@ -31,8 +35,10 @@ public class SessionFilter extends OncePerRequestFilter {
 	@Override
 	protected void initFilterBean() throws ServletException {
 		LOGGER.info("初始化过滤参数");
+		String exclusions = null;
+		exclusions = PropertiesUtils.getValue(EXCLUSIONS);
+		sessionKey = PropertiesUtils.getValue(SESSIONKEY);
 		ServletContext context = this.getFilterConfig().getServletContext();
-		sessionKey = this.getFilterConfig().getInitParameter("sessionKey");
 		if (context.getMajorVersion() == 2 && context.getMinorVersion() < 5) {
 			contextPath = null;
 		}
@@ -40,7 +46,6 @@ public class SessionFilter extends OncePerRequestFilter {
 		if (contextPath == null || contextPath.length() == 0) {
 			contextPath = "/";
 		}
-		String exclusions = this.getFilterConfig().getInitParameter(PARAM_NAME_EXCLUSIONS);
 		if (exclusions != null && exclusions.trim().length() != 0) {
 			excludesPattern = new HashSet<String>(Arrays.asList(exclusions.split("\\s*,\\s*")));
 		}
@@ -78,7 +83,7 @@ public class SessionFilter extends OncePerRequestFilter {
 		}
 
 		for (String pattern : excludesPattern) {
-			if (this.matches(pattern, requestURI)) {
+			if (matches(pattern, requestURI)) {
 				return true;
 			}
 		}
