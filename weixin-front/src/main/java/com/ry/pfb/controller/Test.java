@@ -7,11 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ry.pfb.core.WxMpServerListener;
-
+import com.ry.pfb.util.UserContext;
 
 import me.chanjar.weixin.common.util.StringUtils;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
@@ -29,10 +30,16 @@ public class Test {
 	private final WxMpMessageRouter wxMpMessageRouter = WxMpServerListener.wxMpMessageRouter;
 
 	@RequestMapping("/test")
-	public ModelAndView test(HttpServletRequest re, HttpServletResponse res) throws UnsupportedEncodingException {
+	public ModelAndView test(HttpServletRequest re, HttpServletResponse res){
 		ModelAndView mv = new ModelAndView("test");
 		mv.addObject("name", "呼呼哈");
 		return mv;
+	}
+	
+	@RequestMapping("/test2")
+	public String test2(Model model){
+		model.addAttribute("name",UserContext.getUserVo().getUserName());
+		return "test";
 	}
 
 	@RequestMapping("/weixin")

@@ -13,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
+import com.google.gson.Gson;
+import com.ry.pfb.common.Result;
+
 import me.chanjar.weixin.common.util.StringUtils;
 
 
@@ -31,7 +34,6 @@ public class AxisUtils {
 		if(CollectionUtils.isEmpty(param) || StringUtils.isBlank(method)){
 			return null;
 		}
-		
 		// 使用RPC方式调用WebService
 		RPCServiceClient serviceClient;
 		try {
@@ -57,6 +59,8 @@ public class AxisUtils {
 	}
 	
 	public static void main(String args[]){
-		axisClient(Arrays.asList("zsbr","123456"),"checkLogin");
+	//	axisClient(Arrays.asList("zsbr","123456"),"checkLogin");
+		
+		
 	}
 }

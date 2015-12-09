@@ -1,10 +1,8 @@
 package com.ry.pfb.fiter;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.FilterChain;
@@ -16,8 +14,10 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.ry.pfb.common.UserVo;
 import com.ry.pfb.util.PropertiesUtils;
 
 /**
@@ -54,18 +54,20 @@ public class SessionFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-
 		String requestURI = request.getRequestURI();
-		if (isExclusion(requestURI)) {
-			filterChain.doFilter(request, response);
-			return;
-		}
-		HttpSession session = request.getSession(false);
-		if (session == null || null == session.getAttribute(sessionKey)) {
+		HttpSession session = request.getSession();
+		UserVo userVo = (UserVo)session.getAttribute(sessionKey);
+		
+		if(userVo != null && isExclusion(requestURI)){
+			if(StringUtils.pathEquals(request.getServletPath(), "/customer/loginout")){
+				filterChain.doFilter(request, response);
+			}
+			response.sendRedirect(contextPath + "/test");
+		}else if(userVo == null && !isExclusion(requestURI)){
+			session.setAttribute("url",request.getServletPath());
 			response.sendRedirect(contextPath + "/customer/gologin");
-		}else if(matches(contextPath+"/",requestURI)){
-			response.sendRedirect(contextPath + "");
-		}else {
+			return;
+		}else{
 			filterChain.doFilter(request, response);
 		}
 	}
